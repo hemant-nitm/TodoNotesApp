@@ -1,2 +1,2 @@
 # TodoNotesApp
-Learning
+Todo Notes App, Learning from Mindorks
