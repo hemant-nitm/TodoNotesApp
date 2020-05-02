@@ -19,22 +19,44 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MyNotesActivity extends AppCompatActivity {
 String fullName;
 FloatingActionButton fabAddNotes;
+TextView textViewTitle, textViewDescription;
+SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
-        Intent intent =getIntent();
-       fullName= intent.getStringExtra("full_name");
+        bindView();
+        setupSharedPreference();
+        getIntentData();
+
        fabAddNotes.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                setupDialogBox();
-
+        Log.d("My notes activity", "on click performed");
            }
        });
 
         getSupportActionBar().setTitle(fullName);
+    }
+
+    private void setupSharedPreference() {
+        sharedPreferences=getSharedPreferences(PrefConstant.SHARED_PREERENCE_NAME, MODE_PRIVATE);
+    }
+
+    private void getIntentData() {
+        Intent intent =getIntent();
+        fullName= intent.getStringExtra(AppConstant.FULL_NAME);
+        if(TextUtils.isEmpty(fullName)){
+            fullName=sharedPreferences.getString(PrefConstant.FULL_NAME, "");
+        }
+    }
+
+    private void bindView() {
+        fabAddNotes=findViewById(R.id.fabAddNotes);
+        textViewTitle=findViewById(R.id.textViewTitle);
+        textViewDescription=findViewById(R.id.textViewDescription);
     }
 
     private void setupDialogBox()
@@ -43,8 +65,20 @@ FloatingActionButton fabAddNotes;
         final EditText editTextTitle = view.findViewById( R.id.editTextTitle );
         final EditText editTextDescription = view.findViewById( R.id.editTextDescription );
         Button buttonSubmit = view.findViewById( R.id.buttonSubmit );
-        //Dialog i.e. popup
-        AlertDialog dialog=new AlertDialog.Builder(this).setView(view).create();
+        //Dialog to show popup
+        final AlertDialog dialog=new AlertDialog.Builder(this).setView(view).setCancelable(false).create();
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title= editTextTitle.getText().toString();
+                String desc= editTextDescription.getText().toString();
+                textViewTitle.setText(title);
+                textViewDescription.setText(desc);
+               //Here we can directly pass title and description without declaring it
+                dialog.hide();
+            }
+        });
+
         dialog.show();
     }
 }
