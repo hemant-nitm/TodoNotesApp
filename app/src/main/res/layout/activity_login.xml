@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
 
-    tools:context=".LoginActivity">
+    tools:context=".view.LoginActivity">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
