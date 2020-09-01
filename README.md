@@ -1,5 +1,5 @@
 
-# Todo Notes App, Learning from Mindorks
+# Todo Notes App
 <h2>Screenshots Demo </h2>
 <hr border: 1px dashed black></hr>
 <b><i>ViewPager for first time users<i/> </b>
